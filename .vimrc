@@ -1,10 +1,4 @@
-" URL: http://vim.wikia.com/wiki/Example_vimrc
-" Authors: http://vim.wikia.com/wiki/Vim_on_Freenode
-" Description: A minimal, but feature rich, example .vimrc. If you are a
-"              newbie, basing your first .vimrc on this file is a good choice.
-"              If you're a more advanced user, building your own .vimrc based
-"              on this file is still a good idea.
-
+"Vumble settings
 "------------------------------------------------------------
 " Features {{{1
 "
@@ -14,15 +8,51 @@
 " Set 'nocompatible' to ward off unexpected things that your distro might
 " have made, as well as sanely reset options when re-sourcing .vimrc
 set nocompatible
+filetype off
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+call vundle#begin('~/.vim/vundle/plugins/')
 
-" Attempt to determine the type of a file based on its name and possibly its
-" contents. Use this to allow intelligent auto-indenting for each filetype,
-" and for plugins that are filetype specific.
-filetype indent plugin on
-filetype plugin on
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+" https://github.com/kien/ctrlp.vim
+" Fuzzy file, buffer, mru, tag, etc finder
+Plugin 'kien/ctrlp.vim'
+"https://github.com/itchyny/calendar.vim
+Plugin 'itchyny/calendar.vim'
+"https://github.com/tpope/vim-surround
+Plugin 'tpope/vim-surround'
+"http://www.vim.org/scripts/script.php?script_id=1571
+Plugin 'php.vim'
+"https://github.com/scrooloose/nerdtree
+Plugin 'scrooloose/nerdtree'
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just
+" :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to
+"                     auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line" URL: http://vim.wikia.com/wiki/Example_vimrc
 
-" Enable syntax highlighting
-syntax on
+"---------------------------------
+
+
+" Authors: http://vim.wikia.com/wiki/Vim_on_Freenode
+" Description: A minimal, but feature rich, example .vimrc. If you are a
+"              newbie, basing your first .vimrc on this file is a good choice.
+"              If you're a more advanced user, building your own .vimrc based
+"              on this file is still a good idea.
 
 
 "------------------------------------------------------------
@@ -134,9 +164,9 @@ set pastetoggle=<F11>
 
 " Indentation settings for using 2 spaces instead of tabs.
 " Do not change 'tabstop' from its default value of 8 with this setup.
+set tabstop=2
 set shiftwidth=2
-set softtabstop=2
-set expandtab
+set noexpandtab
 
 " Indentation settings for using hard tabs for indent. Display tabs as
 " two characters wide.
@@ -156,13 +186,30 @@ map Y y$
 " Map <C-L> (redraw screen) to also turn off search highlighting until the
 " next search
 nnoremap <C-L> :nohl<CR><C-L>
-
+" Wechsel zwischen cpp und h
+map <F4> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
 
 "------------------------------------------------------------
 "encoding
 scriptencoding utf-8
 set encoding=utf-8
 
-"setting directory to working file in each window
-autocmd BufEnter * silent! lcd %:p:h
 set bg=dark
+
+set cursorline
+
+"----------------------------------------------------------
+"save and load foldings
+autocmd BufWinLeave *.* mkview!
+autocmd BufWinEnter *.* silent loadview
+
+"------------------------------------------------------------
+"nobackup
+set nobackup
+set nowritebackup
+set noswapfile
+
+"-----------------------------------------------------------
+"persistent undo
+set undofile                            " persistent undos
+set undodir=~/.vim/dirs/undos           " where to store undo histories
