@@ -28,9 +28,25 @@ Plugin 'tpope/vim-surround'
 Plugin 'php.vim'
 "https://github.com/scrooloose/nerdtree
 Plugin 'scrooloose/nerdtree'
+"https://github.com/lepture/vim-velocity
+Bundle "lepture/vim-velocity"
+"https://github.com/JalaiAmitahl/maven-compiler.vim
+Plugin 'JalaiAmitahl/maven-compiler.vim'
+"https://github.com/Shougo/neocomplete.vim
+"Plugin 'Shougo/neocomplete.vim'
+"https://github.com/garbas/vim-snipmate
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
+" Optional:
+Plugin 'honza/vim-snippets'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
+
+"Config snipmate
+"inoremap <TAB><Plug>snipMateTrigger
+
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
 "
@@ -189,6 +205,15 @@ nnoremap <C-L> :nohl<CR><C-L>
 " Wechsel zwischen cpp und h
 map <F4> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
 
+" Java Mappings
+autocmd Filetype java no <F2> :make clean package<CR>
+autocmd Filetype java no <S-F2> :make clean package site site:stage<CR>
+autocmd Filetype java no <C-F2> :make clean<CR>
+autocmd Filetype java no <F3> :make
+autocmd Filetype java no <S-F3> :make clean deploy site site:stage site:deploy<CR>
+
+" Force saving files that require root permission 
+cnoremap w!! w !sudo tee > /dev/null %
 "------------------------------------------------------------
 "encoding
 scriptencoding utf-8
@@ -197,11 +222,6 @@ set encoding=utf-8
 set bg=dark
 
 set cursorline
-
-"----------------------------------------------------------
-"save and load foldings
-autocmd BufWinLeave *.* mkview!
-autocmd BufWinEnter *.* silent loadview
 
 "------------------------------------------------------------
 "nobackup

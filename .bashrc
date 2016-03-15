@@ -96,21 +96,8 @@ alias l='ls -CF'
 alias sudo='sudo '
 
 # aliases als Bookmarks
-alias _fumanoid='cd ~/Documents/fumanoid'
-alias _cows='cd ~/Documents/biotracker'
-alias _xampp='cd /opt/lampp/'
-alias _uni='cd ~/Uni'
-alias _astro='cd ~/Uni/Astro'
-alias _uber='cd ~/Dropbox/Übersetzung'
-alias _study='cd /opt/lampp/htdocs/studyfinder_sb'
-alias _netflix='google-chrome www.netflix.com&'
-alias _xampp_start='~/Documents/DFKI/xampp.sh'
-alias _clean_apt='sudo rm /var/cache/apt/archives/*.deb'
-
-function myFind() {
-  find $2 -type f -name $1
-}
-alias _find=myFind
+alias _clean_kernel_test="dpkg -l linux-* | awk '/^ii/{ print $2}' | grep -v -e `uname -r | cut -f1,2 -d\"-\"` | grep -e [0-9] | grep -E \"(image|headers)\" | xargs sudo apt-get --dry-run remove"
+#alias _clean_kernel='dpkg -l linux-* | awk '/^ii/{ print $2}' | grep -v -e `uname -r | cut -f1,2 -d"-"` | grep -e [0-9] | grep -E "(image|headers)" | xargs sudo apt-get -y purge'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -147,3 +134,12 @@ export VISUAL=vim
 export EDITOR="$VISUAL"
 
 export USE_CCACHE=1
+
+if [ -d /usr/local/include/gtest/ ]
+then
+  export GTEST_HOME=/usr/local/include/gtest/
+fi
+
+export PANTHEIOS_ROOT=/development/pantheios-1.0.1-beta216/
+export STLSOFT=/development/stlsoft-1.9.124/
+source /opt/ros/jade/setup.bash
